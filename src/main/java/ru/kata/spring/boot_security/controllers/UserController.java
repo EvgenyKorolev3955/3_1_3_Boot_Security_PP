@@ -54,7 +54,7 @@ public class UserController {
     public String saveUser(@ModelAttribute("user") User user, Model model) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (!userService.saveUser(user)){
+        if (!userService.saveUser(user)) {
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return "admin/new";
         }
