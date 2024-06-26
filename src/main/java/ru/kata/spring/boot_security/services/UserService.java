@@ -1,13 +1,12 @@
 package ru.kata.spring.boot_security.services;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.entities.User;
+import ru.kata.spring.boot_security.models.User;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
     @Transactional(readOnly = true)
     List<User> findAll();

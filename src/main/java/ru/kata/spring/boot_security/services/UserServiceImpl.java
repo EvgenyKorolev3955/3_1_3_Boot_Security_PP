@@ -1,16 +1,11 @@
 package ru.kata.spring.boot_security.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.entities.Role;
-import ru.kata.spring.boot_security.entities.User;
+import ru.kata.spring.boot_security.models.Role;
+import ru.kata.spring.boot_security.models.User;
 import ru.kata.spring.boot_security.repositories.RoleRepository;
 import ru.kata.spring.boot_security.repositories.UserRepository;
-import ru.kata.spring.boot_security.security.UserDetailsImpl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,30 +13,21 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class UserDetailServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
     @Autowired
-    public UserDetailServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-        return new UserDetailsImpl(user.get());
-    }
-
-    @Override
     public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return Optional.ofNullable(userRepository.findByUsername(username));
     }
 
     @Override

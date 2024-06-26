@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.entities;
+package ru.kata.spring.boot_security.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -17,7 +17,7 @@ public class User {
 
     @NotEmpty(message = "Имя не должно быть пустым")
     @Size(min = 2, max = 20, message = "Имя должно быть от 2 до 20 символов")
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
@@ -27,7 +27,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "users_roles"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -37,7 +37,7 @@ public class User {
     public User() {
     }
 
-    public User(long id, String username, String password, String email, Set<Role> roles) {
+    public User(String username, String password, String email, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;

@@ -1,18 +1,13 @@
 package ru.kata.spring.boot_security.configs;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.entities.Role;
-import ru.kata.spring.boot_security.entities.User;
 import ru.kata.spring.boot_security.security.UserDetailsImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class SuccessUserHandler implements AuthenticationSuccessHandler {

@@ -3,7 +3,7 @@ package ru.kata.spring.boot_security.util;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.kata.spring.boot_security.entities.User;
+import ru.kata.spring.boot_security.models.User;
 import ru.kata.spring.boot_security.services.UserService;
 
 @Component
