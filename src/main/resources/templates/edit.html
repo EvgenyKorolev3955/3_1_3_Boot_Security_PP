@@ -23,19 +23,31 @@
         <div class="mb-3">
             <label for="name" class="form-label">Имя: </label>
             <input th:field="*{username}" type="text" class="form-control" id="name">
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red">Username error
+            </div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Пароль: </label>
             <input th:field="*{password}" type="password" class="form-control" id="password">
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red">Password error
+            </div>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Адрес Email</label>
             <input th:field="*{email}" type="email" class="form-control" id="email" aria-describedby="emailHelp">
             <div id="emailHelp" class="form-text">Мы никогда не передадим ваш адрес электронной почты кому-либо еще.
             </div>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red">Email error</div>
         </div>
-
-        <button type="submit" class="btn btn-primary">Ok</button>
+        <div class="mb-3">
+            <label for="role" class="form-label">Роль</label>
+            <select th:object="${user}" th:field="*{roles}" class="form-select" size="2" multiple aria-label="role"
+                    id="role">
+                <option th:each="r : ${allRoles}" th:value="${r.getId()}" th:text="${r.getShortName()}"></option>
+            </select>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Готово</button>
     </form>
 
 </div>

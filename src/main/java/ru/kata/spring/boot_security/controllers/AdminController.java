@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.User;
+import ru.kata.spring.boot_security.services.RoleService;
 import ru.kata.spring.boot_security.services.UserService;
 
 
@@ -16,11 +17,13 @@ public class AdminController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService, PasswordEncoder passwordEncoder) {
+    public AdminController(UserService userService, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -33,6 +36,7 @@ public class AdminController {
     @GetMapping(value = "/new")
     public String getNewUserForm(@ModelAttribute("user") User user, Model model) {
 
+        model.addAttribute("allRoles", roleService.findAll());
         model.addAttribute("msg", "Создать нового пользователя");
         return "new";
     }
@@ -52,13 +56,16 @@ public class AdminController {
     public String getEditUserForm(@RequestParam(value = "id") long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
+        model.addAttribute("allRoles", roleService.findAll());
         model.addAttribute("msg", "Изменить существующего пользователя");
         return "edit";
     }
 
     @PutMapping()
-    public String updateUser(@ModelAttribute("user") User user, Model model) {
+    public String updateUser(@ModelAttribute("user") User user
+            , Model model) {
 
+        System.out.println(user.getRoles());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (!userService.updateUser(user)) {
             model.addAttribute("updateUserError", "Не удалось обновить пользователя");

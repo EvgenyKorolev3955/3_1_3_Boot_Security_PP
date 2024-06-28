@@ -34,6 +34,13 @@
             <div id="emailHelp" class="form-text">Мы никогда не передадим ваш адрес электронной почты кому-либо еще.
             </div>
         </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Роль</label>
+            <select th:object="${user}" th:field="*{roles}" class="form-select" size="2" multiple aria-label="role"
+                    id="role">
+                <option th:each="r : ${allRoles}" th:value="${r.getId()}" th:text="${r.getShortName()}"></option>
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-primary">Ok</button>
     </form>

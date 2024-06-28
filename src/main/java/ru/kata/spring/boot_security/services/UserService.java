@@ -21,6 +21,9 @@ public interface UserService {
     boolean saveUser(User user);
 
     @Transactional
+    boolean registerUser(User user);
+
+    @Transactional
     boolean updateUser(User user);
 
     @Transactional

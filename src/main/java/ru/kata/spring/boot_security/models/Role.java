@@ -45,6 +45,10 @@ public class Role {
         return name;
     }
 
+    public String getShortName() {
+        return name.substring(name.lastIndexOf("_") + 1);
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -72,6 +76,7 @@ public class Role {
 
     @Override
     public String toString() {
+//        return name.substring(name.lastIndexOf("_") + 1);
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

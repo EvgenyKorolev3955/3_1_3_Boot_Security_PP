@@ -29,7 +29,7 @@
             <label for="email" class="sr-only">Email</label>
             <input type="email" id="email" th:field="*{email}" name="email" class="form-control" placeholder="Email"  aria-describedby="emailHelp">
             <div id="emailHelp" class="form-text">Мы не передадим ваш адрес электронной почты</div>
-            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red">Email error</div>
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red">Email error</div>
         </p>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Готово</button>
 

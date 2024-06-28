@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -20,23 +20,28 @@
     <hr/>
     <br>
     <br>
-    <table class="table">
-        <thead>
+    <table class="table table-striped table-hover">
+        <thead class="table-light">
         <tr>
+            <th scope="col">ID</th>
             <th scope="col">Имя</th>
-            <th scope="col">Пароль</th>
             <th scope="col">Email</th>
+            <th scope="col">Роль</th>
             <th scope="col">Действия</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="u : ${users}">
+            <td th:text="${u.getId()}"></td>
             <td th:text="${u.getUsername()}"></td>
-            <td th:text="${u.getPassword()}"></td>
             <td th:text="${u.getEmail()}"></td>
             <td>
+                <div class="d-inline-block" th:each="r : ${u.getRoles()}" th:text="${r.getShortName()}"></div>
+
+            </td>
+            <td>
                 <div class="d-inline-block">
-                    <a class="btn btn-primary btn-xs" th:href="@{/admin/edit(id=${u.getId()})}" >Изменить</a>
+                    <a class="btn btn-primary btn-xs" th:href="@{/admin/edit(id=${u.getId()})}">Изменить</a>
                 </div>
                 <div class="d-inline-block">
                     <form th:method="DELETE" th:action="@{/admin(id=${u.getId()})}">

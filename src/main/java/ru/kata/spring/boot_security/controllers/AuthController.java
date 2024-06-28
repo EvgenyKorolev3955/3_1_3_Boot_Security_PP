@@ -42,12 +42,17 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@ModelAttribute("user") @Valid User user
             , BindingResult bindingResult) {
+
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "auth/register";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.saveUser(user);
+
+        if (!userService.registerUser(user)) {
+            return "auth/register";
+        }
+
         return "redirect:/auth/login";
     }
 

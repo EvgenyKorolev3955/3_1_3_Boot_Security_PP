@@ -7,10 +7,11 @@ import ru.kata.spring.boot_security.models.User;
 import ru.kata.spring.boot_security.repositories.RoleRepository;
 import ru.kata.spring.boot_security.repositories.UserRepository;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -49,9 +50,21 @@ public class UserServiceImpl implements UserService {
         if (userFromDB.isPresent()) {
             return false;
         }
+        userRepository.save(user);
 
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findById(1L).get());
+        return true;
+
+    }
+
+    @Override
+    public boolean registerUser(User user) {
+
+        Set<Role> roles = Stream.of(roleRepository.findById(1L)
+                .get()).collect(Collectors.toSet());
+
+        if (userRepository.findById(user.getId()).isPresent()) {
+            return false;
+        }
         user.setRoles(roles);
         userRepository.save(user);
 
@@ -69,6 +82,7 @@ public class UserServiceImpl implements UserService {
             updatedUser.setUsername(user.getUsername());
             updatedUser.setPassword(user.getPassword());
             updatedUser.setEmail(user.getEmail());
+            updatedUser.setRoles(user.getRoles());
             userRepository.save(updatedUser);
 
             return true;
